@@ -31,3 +31,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::apiResource('books', BookController::class)->only(['store', 'update', 'destroy']);
 });
+

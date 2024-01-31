@@ -23,7 +23,7 @@ class SubscriptionController extends Controller
         $validator = Validator::make($request->all(), [
             'subscriptionTypeId' => 'required|integer'
         ]);
-        if (!$validator->fails()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
         $subscriptionType = SubscriptionType::find($request->subscriptionTypeId);
@@ -34,10 +34,12 @@ class SubscriptionController extends Controller
         $subscription = Subscription::create([
             'user_id' => $user->id,
             'name' => $subscriptionType->name,
-            'duration' => $subscriptionType->duration,
             'book_id' => $subscriptionType->book_id,
             'price' => $subscriptionType->price,
-            'status' => 'pending'
+            'status' => 'pending',
+            "start_time"=>date('Y-m-d h:i:s'),
+            "end_time"=>date('Y-m-d h:i:s',time() + $subscriptionType->duration * 24 * 60 * 60),
+            "confirmed"=>0
         ]);
         return response()->json(new SubscriptionResource($subscription));
     }

@@ -19,7 +19,7 @@ class FileController extends Controller
             return response()->json(["error" => "Missing permissions"], 403);
         }
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:doc,docx,pdf,txt,csv|max:2048',
+            'file' => 'required|mimes:doc,docx,pdf,txt,csv',
         ]);
 
         if ($validator->fails()) {
@@ -49,6 +49,6 @@ class FileController extends Controller
         if (!$subscription) {
             return response()->json(["error" => "Missing subscription"], 403);
         }
-        return response()->file(Storage::disk('local')->get($fileName));
+        return response(Storage::disk('local')->get($fileName));
     }
 }

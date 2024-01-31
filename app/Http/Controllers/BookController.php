@@ -54,7 +54,7 @@ class BookController extends Controller
             'preview' => 'required|string',
             'content' => 'required|string'
         ]);
-        if (!$validator->fails()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
         $book = Book::create($request->all());
@@ -95,7 +95,7 @@ class BookController extends Controller
             'preview' => 'string',
             'content' => 'string'
         ]);
-        if (!$validator->fails()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
         $book->update($request->all());

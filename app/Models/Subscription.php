@@ -9,14 +9,13 @@ class Subscription extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['book_id', 'name', 'price', 'end_time', 'user_id', 'status', 'start_time', 'duration'];
+    protected $fillable = ['book_id', 'name', 'price', 'end_time', 'user_id', 'status', 'start_time','confirmed'];
 
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
         'name' => 'string',
         'book_id' => 'integer',
-        'duration' => 'integer',
         'price' => 'decimal:2'
     ];
 

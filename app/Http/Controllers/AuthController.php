@@ -19,7 +19,7 @@ class AuthController extends Controller
             'password' => 'required|string|max:255',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 400);
         }
 
         $user = User::create([
@@ -37,7 +37,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthenticated'], 401);
         }
         $user = User::where('email', $request->email)->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
